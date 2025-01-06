@@ -1,2 +1,2 @@
 1 - Detection de contours
-2 - Detection si l'image a été modifiée, objets ajoutés ou enlevés, ..
+2 - Detection si l'image a été modifiée, objets ajoutés ou enlevés
