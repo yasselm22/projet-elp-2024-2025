@@ -1,7 +1,9 @@
 package main
 
 import (
+	image_coder "_/C_/Users/elmou/OneDrive/Documents/INSA/3A/ELP/github/projet-elp-2024-2025"
 	sobel "_/home/marine/Documents/GO/projet-elp-2024-2025"
+	"image_coder"
 	"sobel"
 )
 
@@ -11,4 +13,5 @@ notre ordi  Marine:16 threads*/
 
 func main() {
 	sobel.Decoupe_image()
+	image_coder.EncodeImage()
 }

@@ -1,4 +1,4 @@
-package main
+package image_coder
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-func decodeImage(filename string) (image.Image, string, error) {
+func DecodeImage(filename string) (image.Image, string, error) {
 	file, err1 := os.Open(filename)
 	if err1 != nil {
 		return nil, "", err1
@@ -27,7 +27,7 @@ func decodeImage(filename string) (image.Image, string, error) {
 	return img, format, nil
 }
 
-func encodeImage(filename string, img image.Image, format string) error {
+func EncodeImage(filename string, img image.Image, format string) error {
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
@@ -46,8 +46,7 @@ func encodeImage(filename string, img image.Image, format string) error {
 	}
 }
 
-func main() {
-	/*Pour décoder l'image*/
+/*	*********************************Pour décoder l'image***********************
 	img, format, err1 := decodeImage("path/to/image.jpg")
 	if err1 != nil {
 		fmt.Println("Error decoding image:", err1)
@@ -55,12 +54,11 @@ func main() {
 	}
 	fmt.Printf("Decoded image format: %s\n", format)
 
-	/*Pour encoder l'image*/
+	*********************************Pour encoder l'image*****************
 	err := encodeImage("path/to/output.jpg", img, format)
 	if err != nil {
 		fmt.Println("Error encoding image:", err)
 		return
 	}
 
-	fmt.Println("Image saved successfully")
-}
+	fmt.Println("Image saved successfully") */
