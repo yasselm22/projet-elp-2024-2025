@@ -12,12 +12,10 @@ fonction et pour avoir une exécution optimale, il doit être égal au nombre de
 notre ordi  Marine:16 threads*/
 
 func main() {
-    image_coder.EncodeImage()
+	image_coder.EncodeImage()
 	var liste_hauteurs = [2 * N]int{0}
 	liste_hauteurs = sobel.Decoupe_image()
 	for i := 0; i < N; i++ {
-        go edgeDetection(img,N,liste_hauteurs) {
-            
-        }()
-    }
+		go edgeDetection(img, N, liste_hauteurs[i], liste_hauteurs[i+1])
+	}
 }

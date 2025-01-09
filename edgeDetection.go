@@ -19,11 +19,9 @@ func Decoupe_image(N,img) {
    hauteur_bande = len(pimg) / N
    var liste_hauteurs = [2*N]int{0}
 
-   for i:=1;i<N;i++{
-      liste_hauteurs.append(i*hauteur_bande)
+   for i:=1;i<=N;i++{
       liste_hauteurs.append(i*hauteur_bande)
    }
-   liste_hauteurs.append(N*hauteur_bande)
    return liste_hauteurs
 }
 
