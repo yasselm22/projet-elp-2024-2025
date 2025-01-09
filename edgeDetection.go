@@ -1,27 +1,31 @@
+package sobel
+
+import "container/list"
+
 // https://medium.com/@damithadayananda/image-processing-with-golang-8f20d2d243a2
 
 
 
-
-
-func decoup_image(N,img) {
+func Decoupe_image(N,img) {
 	
-/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
-une exécution optimale, il doit être égale au nombre de thread de notre ordi.
-Renvoie les coordonnées de chaque bande.
-Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
-pimg := *img
-longueur_bande = len(pimg[0])
-hauteur_bande = len(pimg) / N
+   /* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
+   une exécution optimale, il doit être égale au nombre de thread de notre ordi.
+   Renvoie les coordonnées de chaque bande.
+   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
+   pimg := *img
 
+   var longueur_bande, hauteur_bande int
+   longueur_bande = len(pimg[0])
+   hauteur_bande = len(pimg) / N
+   var liste_hauteurs = [2*N]int{0}
 
-
+   for i:=1;i<N;i++{
+      liste_hauteurs.append(i*hauteur_bande)
+      liste_hauteurs.append(i*hauteur_bande)
+   }
+   liste_hauteurs.append(N*hauteur_bande)
+   return liste_hauteurs
 }
-
-
-
-
-
 
 edgeDetection(&pixels) // pixels est équivalent à img, &pixels est l'adresse de l'image à traiter
 
@@ -29,7 +33,7 @@ edgeDetection(&pixels) // pixels est équivalent à img, &pixels est l'adresse d
 calculant les gradients dans les directions horizontales et verticales, puis en combinant ces gradients pour 
 déterminer la présence de contours. */
 // dddddd
-func edgeDetection(pixels *[][]color.Color){
+func EdgeDetection(pixels *[][]color.Color){
   ppixels := *pixels
   //make image grey scale
   x_haut = ?
