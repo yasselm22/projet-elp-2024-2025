@@ -10,9 +10,9 @@ func decoup_image(N,img) {
 une exécution optimale, il doit être égale au nombre de thread de notre ordi.
 Renvoie les coordonnées de chaque bande.
 Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
-
-longueur_bande = img.Width
-hauteur_bande = img.Height / N
+pimg := *img
+longueur_bande = len(pimg[0])
+hauteur_bande = len(pimg) / N
 
 
 
