@@ -4,12 +4,15 @@
 
 
 
-func decoup_image(N) {
+func decoup_image(N,img) {
 	
 /* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
 une exécution optimale, il doit être égale au nombre de thread de notre ordi.
 Renvoie les coordonnées de chaque bande.
 Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
+
+longueur_bande = img.Width
+hauteur_bande = img.Height / N
 
 
 
@@ -20,7 +23,7 @@ Notre fonction edgeDetection utilise les coordonnées retournées par cette fonc
 
 
 
-edgeDetection(&pixels)
+edgeDetection(&pixels) // pixels est équivalent à img, &pixels est l'adresse de l'image à traiter
 
 /*Ce processus utilise les filtres de Sobel pour détecter les contours dans une image en niveaux de gris, en 
 calculant les gradients dans les directions horizontales et verticales, puis en combinant ces gradients pour 
@@ -29,7 +32,9 @@ déterminer la présence de contours. */
 func edgeDetection(pixels *[][]color.Color){
   ppixels := *pixels
   //make image grey scale
-  for x:=0;x<len(ppixels);x++{  // On parcourt tous les pixels de limage
+  x_haut = ?
+  x_bas = ?
+  for x:=x_haut;x_bas;x++{  // On parcourt tous les pixels de limage
      for y:=0;y<len(ppixels[0]);y++{
         r,g,b,a:=ppixels[x][y].RGBA() // Pour chaque pixel, on récupère ses composantes rouge, verte, bleue et alpha
         grey := 0.299*float64(r) + 0.587*float64(g) + 0.114*float64(b) // On calcule une valeur de gris, qui correspond à une pondération des composantes RGB pour refléter la perception humaine des couleurs.
