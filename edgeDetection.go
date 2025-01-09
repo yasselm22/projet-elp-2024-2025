@@ -1,5 +1,25 @@
 // https://medium.com/@damithadayananda/image-processing-with-golang-8f20d2d243a2
 
+
+
+
+
+func decoup_image(N) {
+	
+/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
+une exécution optimale, il doit être égale au nombre de thread de notre ordi.
+Renvoie les coordonnées de chaque bande.
+Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
+
+
+
+}
+
+
+
+
+
+
 edgeDetection(&pixels)
 
 /*Ce processus utilise les filtres de Sobel pour détecter les contours dans une image en niveaux de gris, en 
@@ -38,7 +58,7 @@ func edgeDetection(pixels *[][]color.Color){
   for y:=0;y<len(intensity);y++ { // On parcourt l'image pour remplir ce tableau avec les valeurs de gris calculées.
      intensity[y] = make([]int,len(ppixels[0]))
   }
-  //calculate intensities
+  //calculate intensities : calcule et stocke les valeurs de gris dans un tableau séparé sans modifier l'image, en préparation pour l'application des filtres de Sobel.
   for i:=0;i<len(ppixels);i++{
      for j:=0;j<len(ppixels[0]);j++{
         colors:=color.RGBAModel.Convert(ppixels[i][j]).(color.RGBA)
