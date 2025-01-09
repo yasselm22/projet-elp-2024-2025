@@ -25,7 +25,7 @@ func Decoupe_image(N,img) {
    return liste_hauteurs
 }
 
-edgeDetection(&pixels) // pixels est équivalent à img, &pixels est l'adresse de l'image à traiter
+EdgeDetection(&pixels) // pixels est équivalent à img, &pixels est l'adresse de l'image à traiter
 
 /*Ce processus utilise les filtres de Sobel pour détecter les contours dans une image en niveaux de gris, en 
 calculant les gradients dans les directions horizontales et verticales, puis en combinant ces gradients pour 
