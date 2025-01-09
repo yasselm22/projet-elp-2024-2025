@@ -38,7 +38,7 @@ func edgeDetection(pixels *[][]color.Color){
   for y:=0;y<len(intensity);y++ { // On parcourt l'image pour remplir ce tableau avec les valeurs de gris calculées.
      intensity[y] = make([]int,len(ppixels[0]))
   }
-  //calculate intensities
+  //calculate intensities : calcule et stocke les valeurs de gris dans un tableau séparé sans modifier l'image, en préparation pour l'application des filtres de Sobel.
   for i:=0;i<len(ppixels);i++{
      for j:=0;j<len(ppixels[0]);j++{
         colors:=color.RGBAModel.Convert(ppixels[i][j]).(color.RGBA)
