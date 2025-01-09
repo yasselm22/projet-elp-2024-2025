@@ -5,7 +5,7 @@ edgeDetection(&pixels)
 /*Ce processus utilise les filtres de Sobel pour détecter les contours dans une image en niveaux de gris, en 
 calculant les gradients dans les directions horizontales et verticales, puis en combinant ces gradients pour 
 déterminer la présence de contours. */
-
+// dddddd
 func edgeDetection(pixels *[][]color.Color){
   ppixels := *pixels
   //make image grey scale
