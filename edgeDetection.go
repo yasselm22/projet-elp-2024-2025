@@ -1,5 +1,25 @@
 // https://medium.com/@damithadayananda/image-processing-with-golang-8f20d2d243a2
 
+
+
+
+
+func decoup_image(N) {
+	
+/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
+une exécution optimale, il doit être égale au nombre de thread de notre ordi.
+Renvoie les coordonnées de chaque bande.
+Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
+
+
+
+}
+
+
+
+
+
+
 edgeDetection(&pixels)
 
 /*Ce processus utilise les filtres de Sobel pour détecter les contours dans une image en niveaux de gris, en 
