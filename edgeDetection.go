@@ -19,7 +19,7 @@ func Decoupe_image(N int, img [][]color.Color) [2 * N]int {
 
 	var hauteur_bande int
 	hauteur_bande = len(pimg) / N
-	var liste_hauteurs = [2 * N]int{0}
+	liste_hauteurs := make([]int, 2*N) // // Créé un tableau dynamique, qui nous permet d'utiliser N
 
 	for i := 1; i <= N; i++ {
 		liste_hauteurs[i] = i * hauteur_bande
