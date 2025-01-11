@@ -9,7 +9,7 @@ import (
 
 // https://medium.com/@damithadayananda/image-processing-with-golang-8f20d2d243a2
 
-func Decoupe_image(N int, img [][]color.Color) [2 * N]int {
+func Decoupe_image(N int, img [][]color.Color) []int {
 
 	/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
 	   une exécution optimale, il doit être égale au nombre de thread de notre ordi.
@@ -19,7 +19,7 @@ func Decoupe_image(N int, img [][]color.Color) [2 * N]int {
 
 	var hauteur_bande int
 	hauteur_bande = len(pimg) / N
-	liste_hauteurs := make([]int, 2*N) // // Créé un tableau dynamique, qui nous permet d'utiliser N
+	liste_hauteurs := make([]int, N) // // Créé un tableau dynamique, qui nous permet d'utiliser N
 
 	for i := 1; i <= N; i++ {
 		liste_hauteurs[i] = i * hauteur_bande
