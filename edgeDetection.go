@@ -14,7 +14,10 @@ func Decoupe_image(N int, img [][]color.Color) []int {
 	/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
 	   une exécution optimale, il doit être égale au nombre de thread de notre ordi.
 	   Renvoie les coordonnées de chaque bande.
-	   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
+	   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction
+	   L'image prise en argument doit être une slice de slices de color.Color et non pas de
+	   type image.Image*/
+
 	pimg := img
 
 	var hauteur_bande int

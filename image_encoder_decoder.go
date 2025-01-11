@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image"
+	"image/color"
 	"image/gif"
 	_ "image/gif"
 	"image/jpeg"
@@ -13,6 +14,9 @@ import (
 )
 
 func DecodeImage(filename string) (image.Image, string, error) {
+	/* Cette fonction prend en argument une image dans un format jpg, png, ...
+	et renvoie cette image en type image.Image (qui est un type propre à go)
+	ainsi que le format de l'image décodée (jpeg, png,...) */
 	file, err1 := os.Open(filename)
 	if err1 != nil {
 		return nil, "", err1
@@ -27,7 +31,29 @@ func DecodeImage(filename string) (image.Image, string, error) {
 	return img, format, nil
 }
 
+func ImageToColorMatrix(img image.Image) [][]color.Color {
+	// Obtenir les dimensions de l'image
+	bounds := img.Bounds()
+	width, height := bounds.Max.X, bounds.Max.Y
+
+	// Créer une matrice 2D pour stocker les couleurs des pixels
+	colorMatrix := make([][]color.Color, height)
+	for y := 0; y < height; y++ {
+		colorMatrix[y] = make([]color.Color, width)
+		for x := 0; x < width; x++ {
+			// Extraire la couleur du pixel à la position (x, y)
+			colorMatrix[y][x] = img.At(x, y)
+		}
+	}
+
+	return colorMatrix
+}
+
 func EncodeImage(filename string, img image.Image, format string) error {
+	/* Cette fonction prend en argument une image de type image.Image
+	(qui est un type propre à go) et renvoie cette image dans un format jpg, png, ...
+	en fonction de la valeur de "format" passé en argument. */
+
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
