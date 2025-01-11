@@ -3,6 +3,8 @@ package main
 import (
 	"image/color"
 	"math"
+
+	"gonum.org/v1/gonum/mat"
 )
 
 // https://medium.com/@damithadayananda/image-processing-with-golang-8f20d2d243a2
