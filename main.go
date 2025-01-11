@@ -21,7 +21,7 @@ func main() {
 	var format string
 	var err error
 	var matrice_img [][]color.Color
-	filename := "koala.jpg"
+	filename := "chat.jpg"
 
 	// Demander N à l'utilisateur
 	fmt.Println("Combien de threads possède votre ordinateur? \n = Nombre de routines en concurrence \n = Nombre de bandes découpées dans l'image")
@@ -42,23 +42,15 @@ func main() {
 	// Transforme l'image de type image.Image en matrice
 	matrice_img = ImageToColorMatrix(img)
 
-	print("test1")
-
 	//Découpage de l'image en N bandes
 	liste_hauteurs := Decoupe_image(N, matrice_img)
-
-	print("test2")
 
 	// Lancement des routines Go pour détecter les contours
 	for i := 0; i < N-1; i++ {
 		go EdgeDetection(&matrice_img, liste_hauteurs[i], liste_hauteurs[i+1])
 	}
 
-	print("test3")
-
 	newImage = MatrixToImage(matrice_img)
-
-	print("test4")
 
 	err2 := EncodeImage("resultat."+format, newImage, format)
 	if err2 != nil {
