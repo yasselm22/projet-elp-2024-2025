@@ -37,9 +37,7 @@ func main() {
 	matrice_img = ImageToColorMatrix(img)
 
 	//Découpage de l'image en N bandes
-	// var liste_hauteurs = [2 * N]int{0} : Cette commande créé un tableau statique, on ne peut donc pas utilisée la valeur de N entrée par l'utilisateur à l'exécution.
-	liste_hauteurs := make([]int, 2*N) // Créé un tableau dynamique, qui nous permet d'utiliser N
-	liste_hauteurs = Decoupe_image(N, matrice_img)
+	liste_hauteurs := Decoupe_image(N, matrice_img)
 
 	// Lancement des routines Go pour détecter les contours
 	for i := 0; i < N; i++ {

@@ -20,11 +20,10 @@ func Decoupe_image(N int, img [][]color.Color) []int {
 
 	pimg := img
 
-	var hauteur_bande int
-	hauteur_bande = len(pimg) / N
+	hauteur_bande := len(pimg) / N
 	liste_hauteurs := make([]int, N) // // Créé un tableau dynamique, qui nous permet d'utiliser N
 
-	for i := 1; i <= N; i++ {
+	for i := 0; i <= N; i++ {
 		liste_hauteurs[i] = i * hauteur_bande
 	}
 	return liste_hauteurs
@@ -93,8 +92,12 @@ func EdgeDetection(pixels *[][]color.Color, x_haut int, x_bas int) {
 				for b := 0; b < 3; b++ {
 					xn := x + a - 1
 					yn := y + b - 1
-					magx += intensity[xn][yn] * int(kernelx.At(a, b))
-					magy += intensity[xn][yn] * int(kernely.At(a, b))
+
+					// On vérifie que les indices soient dans les limites de l'image
+					if xn >= 0 && xn < len(ppixels) && yn >= 0 && yn < len(ppixels[0]) {
+						magx += intensity[xn][yn] * int(kernelx.At(a, b))
+						magy += intensity[xn][yn] * int(kernely.At(a, b))
+					}
 				}
 			}
 			p := int(math.Sqrt(float64(magx*magx + magy*magy))) // La magnitude du gradient est calculée en utilisant la racine carrée de la somme des carrés des gradients horizontal et vertical.

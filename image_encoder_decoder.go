@@ -5,11 +5,8 @@ import (
 	"image"
 	"image/color"
 	"image/gif"
-	_ "image/gif"
 	"image/jpeg"
-	_ "image/jpeg"
 	"image/png"
-	_ "image/png"
 	"os"
 )
 
