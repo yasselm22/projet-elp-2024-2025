@@ -1,4 +1,4 @@
-package image_coder
+package main
 
 import (
 	"fmt"

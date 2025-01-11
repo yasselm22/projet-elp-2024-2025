@@ -1,4 +1,4 @@
-package sobel
+package main
 
 import (
 	"image/color"
@@ -15,8 +15,7 @@ func Decoupe_image(N int, img [][]color.Color) [2 * N]int {
 	   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction*/
 	pimg := img
 
-	var longueur_bande, hauteur_bande int
-	longueur_bande = len(pimg[0])
+	var hauteur_bande int
 	hauteur_bande = len(pimg) / N
 	var liste_hauteurs = [2 * N]int{0}
 
@@ -36,7 +35,7 @@ func EdgeDetection(pixels *[][]color.Color, x_haut int, x_bas int) {
 	ppixels := *pixels
 
 	//make image grey scale
-	for x := x_haut; x_bas; x++ { // On parcourt tous les pixels de limage
+	for x := x_haut; x <= x_bas; x++ { // On parcourt tous les pixels de limage
 		for y := 0; y < len(ppixels[0]); y++ {
 			r, g, b, a := ppixels[x][y].RGBA()                             // Pour chaque pixel, on récupère ses composantes rouge, verte, bleue et alpha
 			grey := 0.299*float64(r) + 0.587*float64(g) + 0.114*float64(b) // On calcule une valeur de gris, qui correspond à une pondération des composantes RGB pour refléter la perception humaine des couleurs.
