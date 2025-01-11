@@ -1,9 +1,9 @@
-// ignore tous les fichiers avec les extensions suivantes
+# ignore tous les fichiers avec les extensions suivantes
 *.jpg
 *.jpeg
 *.gif
 *.html
 *.png
 
-// ignore tous les fichiers générés par go build (fichiers exécutables)
+# ignore tous les fichiers générés par go build (fichiers exécutables)
 /bin/
