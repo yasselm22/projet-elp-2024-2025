@@ -16,16 +16,20 @@ func Decoupe_image(N int, img [][]color.Color) []int {
 	   Renvoie les coordonnées de chaque bande.
 	   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction
 	   L'image prise en argument doit être une slice de slices de color.Color et non pas de
-	   type image.Image*/
+	   type image.Image
+	   liste_hauteurs renvoyée est de taille N+1
+	*/
 
 	pimg := img
 
 	hauteur_bande := len(pimg) / N
-	liste_hauteurs := make([]int, N) // // Créé un tableau dynamique, qui nous permet d'utiliser N
-
+	liste_hauteurs := make([]int, N+1) // // Créé un tableau dynamique, qui nous permet d'utiliser N
+	print("test 11")
 	for i := 0; i <= N; i++ {
+		print("test 666")
 		liste_hauteurs[i] = i * hauteur_bande
 	}
+	print("test 12")
 	return liste_hauteurs
 }
 
