@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"math"
 
@@ -39,6 +40,11 @@ calculant les gradients dans les directions horizontales et verticales, puis en 
 déterminer la présence de contours. */
 
 func EdgeDetection(pixels *[][]color.Color, x_haut int, x_bas int) {
+
+	if pixels == nil || *pixels == nil {
+		fmt.Println("Erreur: pixels est nil ou non initialisé")
+		return
+	}
 	ppixels := *pixels
 
 	//make image grey scale
@@ -74,12 +80,14 @@ func EdgeDetection(pixels *[][]color.Color, x_haut int, x_bas int) {
 	//calculate intensities : calcule et stocke les valeurs de gris dans un tableau séparé sans modifier l'image, en préparation pour l'application des filtres de Sobel.
 	for i := 0; i < len(ppixels); i++ {
 		for j := 0; j < len(ppixels[0]); j++ {
-			colors := color.RGBAModel.Convert(ppixels[i][j]).(color.RGBA)
-			r := colors.R
-			g := colors.G
-			b := colors.B
-			v := int(float64(float64(0.299)*float64(r) + float64(0.587)*float64(g) + float64(0.114)*float64(b)))
-			intensity[i][j] = v
+			if i >= 0 && i < len(ppixels) && j >= 0 && j < len(ppixels[0]) {
+				colors := color.RGBAModel.Convert(ppixels[i][j]).(color.RGBA)
+				r := colors.R
+				g := colors.G
+				b := colors.B
+				v := int(float64(float64(0.299)*float64(r) + float64(0.587)*float64(g) + float64(0.114)*float64(b)))
+				intensity[i][j] = v
+			}
 		}
 	}
 	//create new image

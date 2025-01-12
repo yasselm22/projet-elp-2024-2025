@@ -8,6 +8,7 @@ import (
 	"fmt" // package utilisé pour les entrées/sorties en Go
 	"image"
 	"image/color"
+	"sync"
 )
 
 /* Fonction main qui lance une boucle for exécutant N fois la routine go, N est en paramètre de la
@@ -21,6 +22,7 @@ func main() {
 	var format string
 	var err error
 	var matrice_img [][]color.Color
+	var waitgr sync.WaitGroup
 	filename := "chat.jpg"
 
 	// Demander N à l'utilisateur
@@ -47,8 +49,13 @@ func main() {
 
 	// Lancement des routines Go pour détecter les contours
 	for i := 0; i < N-1; i++ {
-		go EdgeDetection(&matrice_img, liste_hauteurs[i], liste_hauteurs[i+1])
+		waitgr.Add(1) // On ajoute une tâche au Wait group
+		go func(i int) {
+			defer waitgr.Done()
+			EdgeDetection(&matrice_img, liste_hauteurs[i], liste_hauteurs[i+1])
+		}(i)
 	}
+	waitgr.Wait() // On attend que toutes les go routines se terminent
 
 	newImage = MatrixToImage(matrice_img)
 

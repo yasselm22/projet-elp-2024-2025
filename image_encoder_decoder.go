@@ -30,6 +30,12 @@ func ImageToColorMatrix(img image.Image) [][]color.Color {
 
 // MatrixToImage prend une matrice de couleurs ([][]color.Color) et la convertit en une image.Image
 func MatrixToImage(matrix [][]color.Color) image.Image {
+
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		fmt.Println("Erreur: la matrice est vide ou mal initialisée")
+		return nil
+	}
+
 	// Obtenir les dimensions de la matrice
 	height := len(matrix)
 	width := len(matrix[0])
@@ -40,6 +46,13 @@ func MatrixToImage(matrix [][]color.Color) image.Image {
 	// Remplir l'image avec les couleurs de la matrice
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
+
+			if matrix[y][x] == nil {
+				fmt.Printf("Erreur: pixel à [%d][%d] est nil, utilisation du noir par défaut\n", y, x)
+				img.Set(x, y, color.Black) // Utilise une couleur par défaut (ici le noir)
+				continue
+			}
+
 			// On prend la couleur de la matrice à la position (x, y)
 			c := matrix[y][x]
 			// On définit le pixel de l'image avec la couleur
