@@ -1,4 +1,4 @@
-package main
+package filtre
 
 /*POUR LANCER LE PROGRAMME :
   go build -o monprogramme
@@ -15,7 +15,7 @@ import (
 fonction et pour avoir une exécution optimale, il doit être égal au nombre de threads de
 notre ordi  Marine:16 threads*/
 
-func main() {
+func Filtre() {
 	var N int
 	var img image.Image
 	var newImage image.Image

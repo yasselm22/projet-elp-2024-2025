@@ -1,4 +1,3 @@
-module filtre
-go 1.22.2
+module projet-elp-2024-2025
 
-require gonum.org/v1/gonum v0.15.1 // indirect
+go 1.22.2
