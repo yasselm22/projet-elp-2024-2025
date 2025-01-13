@@ -23,7 +23,7 @@ func main() {
 	var err error
 	var matrice_img [][]color.Color
 	var waitgr sync.WaitGroup
-	filename := "chat.jpg"
+	filename := "bird_star.jpg"
 
 	// Demander N à l'utilisateur
 	fmt.Println("Combien de threads possède votre ordinateur? \n = Nombre de routines en concurrence \n = Nombre de bandes découpées dans l'image")
