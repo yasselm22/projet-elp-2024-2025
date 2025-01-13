@@ -8,7 +8,7 @@ import (
 func main() {
 
 	// Ce serveur écoute sur le port 8000 pour recevoir des requetes TCP
-	ln, err := net.Listen("tcp", ":8080")
+	ln, err := net.Listen("tcp", ":8000")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -23,12 +23,12 @@ func main() {
 		}
 
 		// Lance une go routine pour chaque nouvelle connexion
-		go handleConnection(conn)
+		go Connection(conn)
 	}
 }
 
-func handleConnection(conn net.Conn) {
-	// Close the connection when we're done
+func Connection(conn net.Conn) {
+	// Ferme la connexion à la fin de la go routine
 	defer conn.Close()
 
 	// Récupère l'image envoyé par le client
