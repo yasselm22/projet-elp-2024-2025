@@ -28,7 +28,7 @@ func main() {
 }
 
 func handleConnection(conn net.Conn) {
-	// Close the connection when we're done
+	// Ferme la connexion quand on a fini
 	defer conn.Close()
 
 	// Récupère l'image envoyé par le client
