@@ -29,6 +29,7 @@ func main() {
 
 func Connection(conn net.Conn) {
 	// Ferme la connexion à la fin de la go routine
+
 	defer conn.Close()
 
 	// Récupère l'image envoyé par le client
