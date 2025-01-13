@@ -15,7 +15,7 @@ import (
 fonction et pour avoir une exécution optimale, il doit être égal au nombre de threads de
 notre ordi  Marine:16 threads*/
 
-func Filtre() {
+func Filtre(filename string) {
 	var N int
 	var img image.Image
 	var newImage image.Image
@@ -23,7 +23,6 @@ func Filtre() {
 	var err error
 	var matrice_img [][]color.Color
 	var waitgr sync.WaitGroup
-	filename := "bird_star.jpg"
 
 	// Demander N à l'utilisateur
 	fmt.Println("Combien de threads possède votre ordinateur? \n = Nombre de routines en concurrence \n = Nombre de bandes découpées dans l'image")
@@ -64,6 +63,5 @@ func Filtre() {
 		fmt.Println("Error encoding image:", err2)
 		return
 	}
-
 	fmt.Println("Nouvelle image 'resultat' créée")
 }

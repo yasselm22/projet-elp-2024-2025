@@ -1,3 +1,3 @@
-module projet-elp-2024-2025
+module projet
 
 go 1.22.2
