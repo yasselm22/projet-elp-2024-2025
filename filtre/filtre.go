@@ -44,14 +44,14 @@ func Filtre(filename string) {
 	matrice_img = ImageToColorMatrix(img)
 
 	//Découpage de l'image en N bandes
-	liste_hauteurs := Decoupe_image(N, matrice_img)
+	//liste_hauteurs := Decoupe_image(N, matrice_img)
 
 	// Lancement des routines Go pour détecter les contours
 	for i := 0; i < N-1; i++ {
 		waitgr.Add(1) // On ajoute une tâche au Wait group
 		go func(i int) {
 			defer waitgr.Done()
-			EdgeDetection(&matrice_img, liste_hauteurs[i], liste_hauteurs[i+1])
+			EdgeDetection(&matrice_img, i*len(matrice_img)/N, (i+1)*len(matrice_img)/N)
 		}(i)
 	}
 	waitgr.Wait() // On attend que toutes les go routines se terminent

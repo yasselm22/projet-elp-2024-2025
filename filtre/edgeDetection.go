@@ -10,18 +10,18 @@ import (
 
 // https://medium.com/@damithadayananda/image-processing-with-golang-8f20d2d243a2
 
-func Decoupe_image(N int, img [][]color.Color) []int {
+//func Decoupe_image(N int, img [][]color.Color) []int {
 
-	/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
-	   une exécution optimale, il doit être égale au nombre de thread de notre ordi.
-	   Renvoie les coordonnées de chaque bande.
-	   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction
-	   L'image prise en argument doit être une slice de slices de color.Color et non pas de
-	   type image.Image
-	   liste_hauteurs renvoyée est de taille N+1
-	*/
+/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
+   une exécution optimale, il doit être égale au nombre de thread de notre ordi.
+   Renvoie les coordonnées de chaque bande.
+   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction
+   L'image prise en argument doit être une slice de slices de color.Color et non pas de
+   type image.Image
+   liste_hauteurs renvoyée est de taille N+1
+*/
 
-	pimg := img
+/*pimg := img
 
 	hauteur_bande := len(pimg) / N
 	liste_hauteurs := make([]int, N+1) // // Créé un tableau dynamique, qui nous permet d'utiliser N
@@ -31,7 +31,7 @@ func Decoupe_image(N int, img [][]color.Color) []int {
 	}
 
 	return liste_hauteurs
-}
+}*/
 
 // pixels est équivalent à img, &pixels est l'adresse de l'image à traiter
 
