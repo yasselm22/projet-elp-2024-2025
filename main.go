@@ -3,7 +3,6 @@ package main
 import (
 	f "filtre"
 	"fmt"
-	"io/ioutil"
 	"net"
 	"os"
 )
@@ -51,7 +50,7 @@ func Connection(conn net.Conn) {
 	imgFormat := detectImageFormat(img_recue)
 	imgName := "received_image" + imgFormat
 
-	err = ioutil.WriteFile(imgName, img_recue, 0644)
+	err = os.WriteFile(imgName, img_recue, 0644)
 	if err != nil {
 		fmt.Println("Erreur d'enregistrement de l'image:", err)
 		return
@@ -62,7 +61,7 @@ func Connection(conn net.Conn) {
 	f.Filtre(imgName)
 
 	// Lire l'image filtrée
-	processedImageData, err := ioutil.ReadFile(imgName)
+	processedImageData, err := os.ReadFile(imgName)
 	if err != nil {
 		fmt.Println("Erreur de lecture de l'image filtrée:", err)
 		return
