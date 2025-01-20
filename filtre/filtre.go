@@ -9,6 +9,7 @@ import (
 	"image"
 	"image/color"
 	"sync"
+	"time"
 )
 
 /* Fonction main qui lance une boucle for exécutant N fois la routine go, N est en paramètre de la
@@ -44,24 +45,51 @@ func Filtre(filename string) {
 	matrice_img = ImageToColorMatrix(img)
 
 	//Découpage de l'image en N bandes
-	//liste_hauteurs := Decoupe_image(N, matrice_img)
+	sousMatrices := Decoupe_image(N, matrice_img)
 
+	// Création d'une matrice résultat de la taille de l'image
+	result := make([][][]color.Color, N)
+
+	timer1 := time.Now()
 	// Lancement des routines Go pour détecter les contours
-	for i := 0; i < N-1; i++ {
+	for i := 0; i < N; i++ {
 		waitgr.Add(1) // On ajoute une tâche au Wait group
 		go func(i int) {
 			defer waitgr.Done()
-			EdgeDetection(&matrice_img, i*len(matrice_img)/N, (i+1)*len(matrice_img)/N)
+			result[i] = EdgeDetection(sousMatrices[i])
 		}(i)
 	}
 	waitgr.Wait() // On attend que toutes les go routines se terminent
 
-	newImage = MatrixToImage(matrice_img)
+	timer2 := time.Now()
+	duree := timer2.Sub(timer1)
+
+	// Assembler les sous-matrices traitées
+	assembledImage := assemblerSousMatrices(result)
+
+	newImage = MatrixToImage(assembledImage)
 
 	err2 := EncodeImage("resultat."+format, newImage, format)
 	if err2 != nil {
 		fmt.Println("Error encoding image:", err2)
 		return
 	}
-	fmt.Println("Nouvelle image 'resultat' créée")
+
+	fmt.Println("Nouvelle image créée en", duree, "secondes.")
+}
+
+func assemblerSousMatrices(sousMatrices [][][]color.Color) [][]color.Color {
+	hauteur := 0
+	// largeur := len(sousMatrices[0][0])
+	for _, sousMat := range sousMatrices {
+		hauteur += len(sousMat)
+	}
+
+	result := make([][]color.Color, hauteur)
+	offset := 0
+	for _, sousMat := range sousMatrices {
+		copy(result[offset:], sousMat)
+		offset += len(sousMat)
+	}
+	return result
 }
