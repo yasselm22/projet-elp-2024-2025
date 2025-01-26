@@ -1,13 +1,14 @@
 package main
 
 import (
-	f "filtre"
 	"fmt"
 	"net"
 	"os"
+
+	f "projet-elp-2024-2025/filtre"
 )
 
-func main() {
+func main() { // Serveur
 
 	// Ce serveur écoute sur le port 8000 pour recevoir des requetes TCP
 	listener, err := net.Listen("tcp", ":8000")
