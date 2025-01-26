@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/binary"
 	"fmt"
+	"log"
 	"net"
 	"os"
-
-	f "filtre"
 )
 
 func main() { // Serveur
@@ -36,22 +36,36 @@ func Connection(conn net.Conn) {
 	// Ferme la connexion à la fin de la go routine
 	defer conn.Close()
 
-	// Récupère l'image envoyé par le client
-	img_recue := make([]byte, 1024*1024) // Le tableau img_recue est initialisé avec une taille de 1024*1024 (1Mo).
-	n, err := conn.Read(img_recue)       // n=nombre de bytes dans l'image. Si l'image envoyée par le client fait moins de 1Mo, le tableau img_recue contient des données inutiles à la fin
-	if err != nil {
-		fmt.Println("Erreur de lecture:", err)
+	// Récupère l'image envoyé par le client et s'assure que l'image entiere a ete recuperee
+	var expectedImageSize int64
+	err1 := binary.Read(conn, binary.BigEndian, &expectedImageSize)
+	if err1 != nil {
+		log.Printf("Error reading image size : %v", err1)
 		return
 	}
 
-	//Supprime les données inutiles à la fin du tableau img_recue si l'image envoyée par le client est inférieure à la taille initialement allouée à img_recue
-	img_recue = img_recue[:n]
+	img_recue := make([]byte, 0)
+	buffer := make([]byte, 1024) // Buffer size
+	for {
+		n, err := conn.Read(buffer)
+		if err != nil {
+			fmt.Println("Error during read:", err)
+			break
+		}
+		img_recue = append(img_recue, buffer[:n]...)
+		// If the received data matches the image size, stop reading
+		if int64(len(img_recue)) >= expectedImageSize { // You need to pass the expected size from the client
+			break
+		}
+	}
 
 	// Détecter le format de l'image et sauvegarder l'image dans un fichier local
 	imgFormat := detectImageFormat(img_recue)
+	fmt.Printf("Detected image format: %s\n", imgFormat)
+
 	imgName := "received_image" + imgFormat
 
-	err = os.WriteFile(imgName, img_recue, 0644)
+	err := os.WriteFile(imgName, img_recue, 0644)
 	if err != nil {
 		fmt.Println("Erreur d'enregistrement de l'image:", err)
 		return
@@ -59,10 +73,11 @@ func Connection(conn net.Conn) {
 	fmt.Println("Image sauvegardée sous:", imgName)
 
 	// Appelle la fonction filtre pour traiter l'image envoyée par le client
-	f.Filtre(imgName)
+	Filtre(imgName)
 
+	imgResult := "resultat.jpeg"
 	// Lire l'image filtrée
-	processedImageData, err := os.ReadFile(imgName)
+	processedImageData, err := os.ReadFile(imgResult)
 	if err != nil {
 		fmt.Println("Erreur de lecture de l'image filtrée:", err)
 		return
@@ -78,7 +93,7 @@ func Connection(conn net.Conn) {
 	supImage(err, imgName)
 
 	// Supprime l'image filtrée après l'avoir envoyée au client
-	supImage(err, "processed_"+imgName)
+	supImage(err, imgResult)
 }
 
 func detectImageFormat(imgData []byte) string {
