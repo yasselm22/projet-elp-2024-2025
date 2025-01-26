@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	f "filtre"
 	"fmt"
 	"log"
 	"net"
@@ -73,7 +74,7 @@ func Connection(conn net.Conn) {
 	fmt.Println("Image sauvegardée sous:", imgName)
 
 	// Appelle la fonction filtre pour traiter l'image envoyée par le client
-	Filtre(imgName)
+	f.Filtre(imgName)
 
 	imgResult := "resultat.jpeg"
 	// Lire l'image filtrée
