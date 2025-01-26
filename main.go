@@ -5,7 +5,7 @@ import (
 	"net"
 	"os"
 
-	f "projet-elp-2024-2025/filtre"
+	f "filtre"
 )
 
 func main() { // Serveur
