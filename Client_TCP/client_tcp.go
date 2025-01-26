@@ -9,7 +9,7 @@ import (
 func main() {
 	var NomImg string
 
-	fmt.Println("Le nom de l'image que vous voulez filtrer : \n")
+	fmt.Println("Le nom de l'image que vous voulez filtrer : ")
 
 	fmt.Scanln(&NomImg)
 	imagePath := NomImg + ".jpg"
