@@ -7,8 +7,12 @@ import (
 )
 
 func main() {
+	var NomImg string
 
-	imagePath := "chat.jpg"
+	fmt.Println("Le nom de l'image que vous voulez filtrer : ")
+
+	fmt.Scanln(&NomImg)
+	imagePath := NomImg + ".jpg"
 
 	// Lire l'image  // Lire le contenu de l'image depuis le disque dur. Charger ce contenu dans une variable en mémoire, sous forme de tableau d'octets ([]byte), pour qu'il puisse être transmis via la connexion TCP.
 	imageData, err := os.ReadFile(imagePath)
@@ -24,7 +28,7 @@ func main() {
 		return
 	}
 	// Fermer la connexion
-	defer conn.Close() // La connexion TCP sera toujours fermée, même en cas d'erreurs, mais à la fin de la fonction main, donc pas de problème pour la reception de l'image
+	//defer conn.Close() // La connexion TCP sera toujours fermée, même en cas d'erreurs, mais à la fin de la fonction main, donc pas de problème pour la reception de l'image
 
 	// Envoi de l'image au serveur
 	_, err = conn.Write(imageData) // []byte("IMAGE") au lieu de imageData
@@ -41,4 +45,23 @@ func main() {
 		return
 	}
 	defer file.Close() // "Garantie que toutes les données sont écrites sur le disque" : les données en mémoire tampon sont réellement sauvegardées sur le disque. "Le fichier n'est plus verrouillé" : le fichier redevient accessible à d'autres programmes ou parties du code
+
+	buffer := make([]byte, 1024) // Buffer to store received data
+	for {
+		n, err := conn.Read(buffer)
+		if err != nil {
+			if err.Error() == "EOF" {
+				break // End of file, break out of the loop
+			}
+			fmt.Println("Erreur de lecture de l'image traitée:", err)
+			return
+		}
+		// Write the received chunk to the file
+		_, err = file.Write(buffer[:n])
+		if err != nil {
+			fmt.Println("Erreur d'écriture du fichier:", err)
+			return
+		}
+	}
+	fmt.Println("Image traitée reçue et sauvegardée sous", processedImage)
 }
