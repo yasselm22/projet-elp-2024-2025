@@ -2,7 +2,6 @@
 *.jpg
 *.jpeg
 *.gif
-*.html
 *.png
 
 # ignore tous les fichiers générés par go build (fichiers exécutables)
