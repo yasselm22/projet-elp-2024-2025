@@ -49,24 +49,25 @@ view model =
     div [ style "padding" "20px" ]
         [ -- Zone de saisie
           textarea 
-            [ value model.input
-            , onInput InputChanged
+            [ value model.input -- La valeur actuelle de la zone de texte est liée au champ input du modèle. Cela garantit que la zone de texte affiche toujours la valeur stockée dans le modèle
+            , onInput InputChanged -- Cet événement déclenche un message InputChanged à chaque fois que l'utilisateur modifie le texte dans la zone. Le message contiendra le nouveau texte saisi par l'utilisateur.
             , style "width" "400px"
             , style "height" "150px"
-            , style "margin-bottom" "20px"
+            , style "margin-bottom" "20px" -- Ajoute un espace de 20 pixels sous la zone de texte pour séparer les éléments visuellement.
             ] 
-            []
+            [] -- La liste vide [] indique que la zone de texte ne contient aucun contenu HTML enfant (le texte est défini via la valeur value).
           
+
           -- Affichage des commandes parsées (pour débogage)
         , case model.commands of
-            Ok commands ->
+            Ok commands -> -- Si le parseur a réussi à analyser le texte (Ok), on affiche :
                 div []
                     [ text "Commandes parsées avec succès :"
                     , pre [] [ text (Debug.toString commands) ]  -- Affiche la structure Elm
-                    ]
+                    ] -- Une représentation textuelle des commandes dans un élément <pre> (affichage formaté comme du code).
 
             Err errorMsg ->
-                div [ style "color" "red" ] [ text errorMsg ]
+                div [ style "color" "red" ] [ text errorMsg ] -- Si le parseur a rencontré une erreur (Err), on affiche un message d'erreur avec un style rouge (pour attirer l'attention). Le contenu du message d'erreur est stocké dans errorMsg.
         ]
 
 -- RENDER COMMANDS
@@ -78,14 +79,17 @@ view model =
         --[]
         
 
--- MAIN
-main : Program () Model Msg
+-- MAIN : Ce code Elm est la configuration principale de votre application. Il utilise la fonction Browser.element pour définir une application Elm qui s'intègre dans le navigateur.
+main : Program () Model Msg -- () : Représente les données initiales fournies par l'environnement JavaScript (généralement ignorées ici, d'où le type vide ()).
+-- Model : Le type du modèle qui représente l'état de l'application.
+-- Msg : Le type des messages qui représentent les événements pouvant modifier l'état.
+
 main =
-    Browser.element
-        { init = \_ -> ( init, Cmd.none )
-        , update = update
-        , view = view
-        , subscriptions = \_ -> Sub.none
+    Browser.element -- Permet de créer une application Elm qui interagit directement avec le DOM du navigateur.
+        { init = \_ -> ( init, Cmd.none ) -- init : Initialise l'état de l'application.
+        , update = update -- update : Met à jour le modèle en réponse à des messages.
+        , view = view -- view : Génère la vue (HTML) basée sur le modèle.
+        , subscriptions = \_ -> Sub.none -- subscriptions : Définit les abonnements aux événements externes
         }
 --main =
     --Browser.sandbox
