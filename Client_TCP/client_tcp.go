@@ -9,11 +9,14 @@ import (
 
 func main() {
 	var NomImg string
+	var N int
 
-	fmt.Println("Le nom de l'image que vous voulez filtrer : \n")
-
+	fmt.Println("Le nom de l'image que vous voulez filtrer : ")
 	fmt.Scanln(&NomImg)
 	imagePath := NomImg + ".jpg"
+
+	fmt.Println("Combien de go routines voulez-vous exécuter ? : ")
+	fmt.Scanln(&N)
 
 	// Lire l'image  // Lire le contenu de l'image depuis le disque dur. Charger ce contenu dans une variable en mémoire, sous forme de tableau d'octets ([]byte), pour qu'il puisse être transmis via la connexion TCP.
 	imageData, err := os.ReadFile(imagePath)
@@ -37,6 +40,14 @@ func main() {
 	err = binary.Write(conn, binary.BigEndian, imageSize)
 	if err != nil {
 		fmt.Println("Erreur d'envoi de la taille de l'image : ", err)
+		return
+	}
+
+	// Envoi du nombres de go routines au serveur
+	N_routine := int64(N)
+	err = binary.Write(conn, binary.BigEndian, N_routine)
+	if err != nil {
+		fmt.Println("Erreur d'envoi du nombre de go routines au serveur", err)
 		return
 	}
 
