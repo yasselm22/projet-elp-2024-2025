@@ -1,4 +1,4 @@
-module Parsing exposing (..)
+module Parsing exposing (Command(..), programParser)
 
 import Parser exposing (Parser, (|.), (|=), succeed, symbol, int, float, spaces, lazy, sequence)
 
