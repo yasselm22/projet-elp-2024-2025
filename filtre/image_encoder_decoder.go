@@ -48,7 +48,6 @@ func MatrixToImage(matrix [][]color.Color) image.Image {
 		for x := 0; x < width; x++ {
 
 			if matrix[y][x] == nil {
-				fmt.Printf("Erreur: pixel à [%d][%d] est nil, utilisation du noir par défaut\n", y, x)
 				img.Set(x, y, color.Black) // Utilise une couleur par défaut (ici le noir)
 				continue
 			}
@@ -103,20 +102,3 @@ func EncodeImage(filename string, img image.Image, format string) error {
 		return fmt.Errorf("unsupported format: %s", format)
 	}
 }
-
-/*	*********************************Pour décoder l'image***********************
-	img, format, err1 := decodeImage("path/to/image.jpg")
-	if err1 != nil {
-		fmt.Println("Error decoding image:", err1)
-		return
-	}
-	fmt.Printf("Decoded image format: %s\n", format)
-
-	*********************************Pour encoder l'image*****************
-	err := encodeImage("path/to/output.jpg", img, format)
-	if err != nil {
-		fmt.Println("Error encoding image:", err)
-		return
-	}
-
-	fmt.Println("Image saved successfully") */
