@@ -59,7 +59,6 @@ func Connection(conn net.Conn) {
 			break
 		}
 	}
-
 	// Détecter le format de l'image et sauvegarder l'image dans un fichier local
 	imgFormat := detectImageFormat(img_recue)
 	fmt.Printf("Detected image format: %s\n", imgFormat)
