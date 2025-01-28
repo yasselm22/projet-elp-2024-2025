@@ -16,8 +16,8 @@ import (
 fonction et pour avoir une exécution optimale, il doit être égal au nombre de threads de
 notre ordi  Marine:16 threads*/
 
-func Filtre(filename string) {
-	var N int
+func Filtre(filename string, N int) {
+	// var N int
 	var img image.Image
 	var newImage image.Image
 	var format string
@@ -26,9 +26,9 @@ func Filtre(filename string) {
 	var waitgr sync.WaitGroup
 
 	// Demander N à l'utilisateur
-	fmt.Println("Combien de threads possède votre ordinateur? \n = Nombre de routines en concurrence \n = Nombre de bandes découpées dans l'image")
+	// fmt.Println("Combien de threads possède votre ordinateur? \n = Nombre de routines en concurrence \n = Nombre de bandes découpées dans l'image")
 
-	fmt.Scanln(&N) // Cette fonction attend que l'utilisateur saisisse des données au clavier et appuie sur Entrée.
+	// fmt.Scanln(&N) // Cette fonction attend que l'utilisateur saisisse des données au clavier et appuie sur Entrée.
 	// On utilise l'addresse de N &N en argument de la fonction pour que Scanln modifie directement la valeur de N avec la valeur donnée par l'utilisateur.
 
 	//Transforme l'image en une image de format image.Image
