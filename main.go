@@ -34,14 +34,22 @@ func main() { // Serveur
 }
 
 func Connection(conn net.Conn) {
+	var expectedImageSize int64
+	var N_routines int64
 	// Ferme la connexion à la fin de la go routine
 	defer conn.Close()
 
 	// Récupère l'image envoyé par le client et s'assure que l'image entiere a ete recuperee
-	var expectedImageSize int64
 	err1 := binary.Read(conn, binary.BigEndian, &expectedImageSize)
 	if err1 != nil {
 		log.Printf("Error reading image size : %v", err1)
+		return
+	}
+
+	// Récupérer nombre de go routines à exécuter
+	err2 := binary.Read(conn, binary.BigEndian, &N_routines)
+	if err2 != nil {
+		fmt.Println("Erreur récupération nombre de go routines", err2)
 		return
 	}
 
@@ -73,7 +81,9 @@ func Connection(conn net.Conn) {
 	fmt.Println("Image sauvegardée sous:", imgName)
 
 	// Appelle la fonction filtre pour traiter l'image envoyée par le client
-	f.Filtre(imgName)
+	N := int(N_routines)
+	fmt.Println("nb go routines : ", N)
+	f.Filtre(imgName, N)
 
 	imgResult := "resultat.jpeg"
 	// Lire l'image filtrée
