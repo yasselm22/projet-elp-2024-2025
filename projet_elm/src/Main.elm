@@ -17,7 +17,7 @@ type alias Model =
 
 init : Model
 init =
-    { input = "Exemple : [Forward 100, Repeat 4 [Forward 50, Left 90], Forward 100]"  -- C'est meiux le champ vide au départ ?
+    { input = "Exemple :[Forward 100, Repeat 4 [Forward 50, Left 90], Forward 100]"  -- C'est meiux le champ vide au départ ?
         , commands = Ok []
         }
 
@@ -29,11 +29,15 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         InputChanged newInput ->
-            ( { model 
-                | input = newInput
-                , commands = 
+            let
+                parsedCommands = 
                     Parser.run programParser newInput
                         |> Result.mapError (\_ -> "Erreur de syntaxe")
+                _ = Debug.log "Parsed Commands" parsedCommands
+            in
+            ( { model 
+                | input = newInput
+                , commands = parsedCommands
               }
             , Cmd.none
             )
