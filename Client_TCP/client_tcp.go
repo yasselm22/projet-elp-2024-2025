@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/binary"
 	"fmt"
 	"net"
 	"os"
@@ -9,7 +10,7 @@ import (
 func main() {
 	var NomImg string
 
-	fmt.Println("Le nom de l'image que vous voulez filtrer : ")
+	fmt.Println("Le nom de l'image que vous voulez filtrer : \n")
 
 	fmt.Scanln(&NomImg)
 	imagePath := NomImg + ".jpg"
@@ -21,6 +22,8 @@ func main() {
 		return
 	}
 
+	imageSize := int64(len(imageData))
+
 	//Connexion au serveur
 	conn, err := net.Dial("tcp", "localhost:8000")
 	if err != nil {
@@ -29,6 +32,13 @@ func main() {
 	}
 	// Fermer la connexion
 	//defer conn.Close() // La connexion TCP sera toujours fermée, même en cas d'erreurs, mais à la fin de la fonction main, donc pas de problème pour la reception de l'image
+
+	//Envoyer la taille de l'image au serveur
+	err = binary.Write(conn, binary.BigEndian, imageSize)
+	if err != nil {
+		fmt.Println("Erreur d'envoi de la taille de l'image : ", err)
+		return
+	}
 
 	// Envoi de l'image au serveur
 	_, err = conn.Write(imageData) // []byte("IMAGE") au lieu de imageData
