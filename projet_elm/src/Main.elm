@@ -23,7 +23,7 @@ init =
 
 -- UPDATE
 type Msg
-    = InputChanged String
+    = InputChanged String -- InputChanged String : Ce message est envoyé lorsqu'il y a un changement dans une entrée utilisateur (par exemple, une boîte de texte). Il transporte une chaîne de caractères, qui est le texte saisi par l'utilisateur.
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -31,15 +31,15 @@ update msg model =
         InputChanged newInput ->
             let
                 parsedCommands = 
-                    Parser.run programParser newInput
-                        |> Result.mapError (\_ -> "Erreur de syntaxe")
-                _ = Debug.log "Parsed Commands" parsedCommands
+                    Parser.run programParser newInput  -- exécute un analyseur syntaxique (programParser) sur le texte saisi par l'utilisateur (newInput). Cette fonction retourne un Result qui peut être soit Ok, soit Err.
+                        |> Result.mapError (\_ -> "Erreur de syntaxe") -- Remplace l'erreur détectée Err par la chaine de caractères : "Erreur de syntaxe"
+                _ = Debug.log "Parsed Commands" parsedCommands -- Cette ligne envoie une sortie de débogage dans la console de développement du navigateur. Debug.log affiche une étiquette ("Parsed Commands") suivie de la valeur de parsedCommands.
             in
-            ( { model 
-                | input = newInput
-                , commands = parsedCommands
+            ( { model       -- Miseà jour du nouveau model
+                | input = newInput --input : Stocke le nouveau texte saisi par l'utilisateur (newInput).
+                , commands = parsedCommands  -- commands : Stocke le résultat de l'analyse syntaxique (parsedCommands), qui peut être : Ok ou Err
               }
-            , Cmd.none
+            , Cmd.none  -- Cmd.none signifie qu'il n'y a pas d'effet secondaire à exécuter pour cet événement.
             )
 
 
