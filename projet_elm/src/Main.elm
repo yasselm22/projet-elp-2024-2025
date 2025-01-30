@@ -5,6 +5,7 @@ import Html exposing (Html, div, text, textarea, button, input, pre)
 import Html.Attributes exposing (style, value, placeholder)
 import Html.Events exposing (onInput, onClick)
 import Parsing exposing (Command(..), programParser)
+import Dessin exposing (renderCommands)
 import Parser
 import Svg exposing (Svg, svg, line, circle)
 import Svg.Attributes exposing (viewBox, width, height, x1, y1, x2, y2, stroke, cx, cy, r, fill)
@@ -48,7 +49,7 @@ update msg model =
             case model.commands of
                 Ok commands ->
                     ( { model
-                        | drawing = renderCommands commands
+                        | drawing = Dessin.renderCommands commands
                       }
                     , Cmd.none
                     )
@@ -72,7 +73,7 @@ view model =
                 [ placeholder "example: [Repeat 360 [Forward 1, Left 1]]"
                 , value model.input
                 , onInput InputChanged
-                , style "width" "400px"
+                , style "width" "500px"
                 , style "margin-bottom" "10px"
                 ]
                 []
@@ -108,7 +109,7 @@ view model =
 
 
 
-
+{-
 -- Structure pour le "Turtle Graphics" 
 type alias Turtle =
     { x : Float
@@ -147,6 +148,8 @@ renderCommands commands =
 
 
 -- RENDER COMMANDS
+-- fonction qui prend une commande (de type Command) et retourne un élément SVG (Svg msg) correspondant à cette commande
+-- Elle convertie une commande TcTurtle (comme Forward, Left, Right, etc.) en un élément visuel (comme une ligne, un cercle, ou autre) qui sera affiché dans le <svg> de l'application
 renderCommand : Command -> (Turtle, List (Svg msg)) -> (Turtle, List (Svg msg))
 renderCommand command (turtle, elements) =
     case command of
@@ -173,12 +176,12 @@ renderCommand command (turtle, elements) =
 
         Repeat n subCommands ->
             let
-                -- Répéter les sous-commandes `n` fois
+                -- Répète les sous-commandes `n` fois
                 repeatedCommands = List.repeat n subCommands |> List.concat
             in
-            -- Appliquer les commandes répétées
+            -- Applique les commandes répétées
             List.foldl renderCommand (turtle, elements) repeatedCommands
-        
+-}     
 
 -- MAIN : Ce code Elm est la configuration principale de votre application. Il utilise la fonction Browser.element pour définir une application Elm qui s'intègre dans le navigateur.
 main : Program () Model Msg -- () : Représente les données initiales fournies par l'environnement JavaScript (généralement ignorées ici, d'où le type vide ()).
