@@ -171,9 +171,6 @@ renderCommand command (turtle, elements) =
         Right angle ->
             (turnRight angle turtle, elements)
 
-        --Repeat _ _ ->
-        --    (turtle, elements)  -- Ignore Repeat pour l'instant
-
         Repeat n subCommands ->
             let
                 -- Répéter les sous-commandes `n` fois
@@ -181,16 +178,6 @@ renderCommand command (turtle, elements) =
             in
             -- Appliquer les commandes répétées
             List.foldl renderCommand (turtle, elements) repeatedCommands
-
-
-
--- RENDER COMMANDS
---renderCommands : String -> List (Svg msg)
---renderCommands commands =
-    --if commands /= "" then
-        --[ circle [ cx "250", cy "250", r "50", fill "red" ] [] ]
-    --else
-        --[]
         
 
 -- MAIN : Ce code Elm est la configuration principale de votre application. Il utilise la fonction Browser.element pour définir une application Elm qui s'intègre dans le navigateur.
