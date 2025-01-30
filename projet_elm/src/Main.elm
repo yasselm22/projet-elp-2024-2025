@@ -171,8 +171,16 @@ renderCommand command (turtle, elements) =
         Right angle ->
             (turnRight angle turtle, elements)
 
-        Repeat _ _ ->
-            (turtle, elements)  -- Ignore Repeat pour l'instant
+        --Repeat _ _ ->
+        --    (turtle, elements)  -- Ignore Repeat pour l'instant
+
+        Repeat n subCommands ->
+            let
+                -- Répéter les sous-commandes `n` fois
+                repeatedCommands = List.repeat n subCommands |> List.concat
+            in
+            -- Appliquer les commandes répétées
+            List.foldl renderCommand (turtle, elements) repeatedCommands
 
 
 

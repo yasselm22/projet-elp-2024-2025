@@ -46,10 +46,8 @@ repeatParser =
         |= int
         |. spaces
         |. symbol "["
-        |= lazy (\_ -> sequence { start = "", separator = ",", end = "]", spaces = spaces, item = commandParser, trailing = Parser.Forbidden }) -- Sans lazy, on aurait une récursion infinie car commandParser dépend de lui-même (pour les commandes imbriquées)
-        |. spaces
+        |= lazy (\_ -> sequence { start = "", separator = ",", end = "", spaces = spaces, item = commandParser, trailing = Parser.Forbidden }) -- Sans lazy, on aurait une récursion infinie car commandParser dépend de lui-même (pour les commandes imbriquées)
         |. symbol "]"
-        |. spaces
 
 -- Pour parser une liste complète de commandes
 programParser : Parser (List Command)
