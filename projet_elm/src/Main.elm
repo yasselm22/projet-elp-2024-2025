@@ -60,93 +60,52 @@ update msg model =
                     , Cmd.none
                     )
 
-{-
--- VIEW
-view : Model -> Html Msg
-view model =
-    div [ style "padding" "20px" ]
-        [ -- Zone de saisie
-          textarea 
-            [ value model.input -- La valeur actuelle de la zone de texte est liée au champ input du modèle. Cela garantit que la zone de texte affiche toujours la valeur stockée dans le modèle
-            , onInput InputChanged -- Cet événement déclenche un message InputChanged à chaque fois que l'utilisateur modifie le texte dans la zone. Le message contiendra le nouveau texte saisi par l'utilisateur.
-            , style "width" "400px"
-            , style "height" "150px"
-            , style "margin-bottom" "20px"
-            ] 
-            []
-          
-          -- Affichage des commandes parsées (pour débogage)
-        , case model.commands of
-            Ok commands ->
-                div []
-                    [ text "Commandes parsées avec succès :"
-                    , pre [] [ text (Debug.toString commands) ]  -- Affiche la structure Elm
-                    ]
-
-            Err errorMsg ->
-                div [ style "color" "red" ] [ text errorMsg ]
-        ]
 
 -- VIEW
 view : Model -> Html Msg
 view model =
-    div []
-        [ input
-            [ placeholder "example: [Repeat 360 [Forward 1, Left 1]]"
-            , value model.input
-            , onInput InputChanged
+    div [ style "padding" "5px", style "display" "flex", style "flex-direction" "column", style "align-items" "center" ]
+    -- active le mode Flexbox, pour organiser les éléments dans l'interface, éléments affichés en colonne, éléments centrés
+        [ -- Zone de saisie et bouton Draw dans un conteneur
+          div [ style "margin-bottom" "10px", style "text-align" "center" ]
+            [ input
+                [ placeholder "example: [Repeat 360 [Forward 1, Left 1]]"
+                , value model.input
+                , onInput InputChanged
+                , style "width" "400px"
+                , style "margin-bottom" "10px"
+                ]
+                []
+            , button
+                [ onClick Draw
+                , style "display" "block"  -- prend seulement la largeur de son contenu.
+                , style "margin" "auto"  -- centre l'élément horizontalement, mais seulement si l'élément est en display: block ou flex
+                ]
+                [ text "Draw" ]
             ]
-            []
-        , button [ onClick Draw ] [ text "Draw" ]
-        , svg
-            [ viewBox "0 0 500 500"
-            , width "500"
-            , height "500"
-            ]
-            model.drawing
-        ]-}
-
-
--- VIEW
-view : Model -> Html Msg
-view model =
-    div [ style "padding" "20px" ]
-        [ -- Zone de saisie
-          input
-            [ placeholder "example: [Repeat 360 [Forward 1, Left 1]]"
-            , value model.input
-            , onInput InputChanged
-            , style "width" "400px"
-            , style "margin-bottom" "20px"
-            ]
-            []
-          
-          -- Bouton pour dessiner
-        , button
-            [ onClick Draw
-            , style "margin-bottom" "20px"
-            ]
-            [ text "Draw" ]
-          
-          -- Zone de dessin SVG
-        , svg
-            [ viewBox "0 0 500 500"
-            , width "500"
-            , height "500"
-            ]
-            model.drawing
           
           -- Affichage des commandes parsées pour le débogage
         , case model.commands of
             Ok commands ->
-                div []
+                div [ style "margin-bottom" "10px", style "text-align" "center" ]
                     [ text "Commandes parsées avec succès :"
                     , pre [] [ text (Debug.toString commands) ]
                     ]
 
             Err errorMsg ->
-                div [ style "color" "red" ] [ text errorMsg ]
+                div [ style "color" "red", style "margin-bottom" "10px", style "text-align" "center" ]
+                    [ text errorMsg ]
+
+          -- Zone de dessin SVG
+        , svg
+            [ viewBox "0 0 500 500"
+            , width "500"
+            , height "500"
+            , style "border" "1px solid black"
+            ]
+            model.drawing
         ]
+
 
 
 
@@ -238,9 +197,3 @@ main =
         , view = view -- view : Génère la vue (HTML) basée sur le modèle.
         , subscriptions = \_ -> Sub.none -- subscriptions : Définit les abonnements aux événements externes
         }
---main =
-    --Browser.sandbox
-        --{ init = init
-        --, update = update
-        --, view = view
-        --}
