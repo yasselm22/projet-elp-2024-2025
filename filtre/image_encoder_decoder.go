@@ -11,6 +11,9 @@ import (
 )
 
 func ImageToColorMatrix(img image.Image) [][]color.Color {
+	/* Fonction qui prend en paramètre un objet de type image.Image
+	Extrait la couleur de chaque pixel et la stocke dans une matrice de type color.Color */
+
 	// Obtenir les dimensions de l'image
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y

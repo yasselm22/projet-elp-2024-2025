@@ -1,35 +1,24 @@
 package filtre
 
-/*POUR LANCER LE PROGRAMME :
-  go build -o monprogramme
-  ./monprogramme */
-
 import (
-	"fmt" // package utilisé pour les entrées/sorties en Go
+	"fmt"
 	"image"
 	"image/color"
 	"sync"
 	"time"
 )
 
-/* Fonction main qui lance une boucle for exécutant N fois la routine go, N est en paramètre de la
+/* Fonction qui lance une boucle for pour exécuter une goroutine sur chaque bande découpée dans l'image, N est en paramètre de la
 fonction et pour avoir une exécution optimale, il doit être égal au nombre de threads de
-notre ordi  Marine:16 threads*/
+notre ordi */
 
 func Filtre(filename string, N int) {
-	// var N int
 	var img image.Image
 	var newImage image.Image
 	var format string
 	var err error
 	var matrice_img [][]color.Color
 	var waitgr sync.WaitGroup
-
-	// Demander N à l'utilisateur
-	// fmt.Println("Combien de threads possède votre ordinateur? \n = Nombre de routines en concurrence \n = Nombre de bandes découpées dans l'image")
-
-	// fmt.Scanln(&N) // Cette fonction attend que l'utilisateur saisisse des données au clavier et appuie sur Entrée.
-	// On utilise l'addresse de N &N en argument de la fonction pour que Scanln modifie directement la valeur de N avec la valeur donnée par l'utilisateur.
 
 	//Transforme l'image en une image de format image.Image
 	img, format, err = DecodeImage(filename)
@@ -62,7 +51,7 @@ func Filtre(filename string, N int) {
 	waitgr.Wait() // On attend que toutes les go routines se terminent
 
 	timer2 := time.Now()
-	duree := timer2.Sub(timer1)
+	duree := timer2.Sub(timer1) // Calcule du temps mis par les goroutines pour traiter l'image dans sa globalité
 
 	// Assembler les sous-matrices traitées
 	assembledImage := assemblerSousMatrices(result)
@@ -79,8 +68,8 @@ func Filtre(filename string, N int) {
 }
 
 func assemblerSousMatrices(sousMatrices [][][]color.Color) [][]color.Color {
+	/* Fonction qui permet de rassembler toutes les sous-matrices en une seule matrice pour ensuite la convertir en image */
 	hauteur := 0
-	// largeur := len(sousMatrices[0][0])
 	for _, sousMat := range sousMatrices {
 		hauteur += len(sousMat)
 	}

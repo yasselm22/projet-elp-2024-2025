@@ -39,37 +39,38 @@ func Connection(conn net.Conn) {
 	// Ferme la connexion à la fin de la go routine
 	defer conn.Close()
 
-	// Récupère l'image envoyé par le client et s'assure que l'image entiere a ete recuperee
+	// Récupère la taille de l'image envoyée par le client et s'assure que l'image entiere a été récupérée
 	err1 := binary.Read(conn, binary.BigEndian, &expectedImageSize)
 	if err1 != nil {
-		log.Printf("Error reading image size : %v", err1)
+		log.Printf("Erreur pendant la lecture de la taille de l'image : %v", err1)
 		return
 	}
 
-	// Récupérer nombre de go routines à exécuter
+	// Récupère nombre de go routines à exécuter
 	err2 := binary.Read(conn, binary.BigEndian, &N_routines)
 	if err2 != nil {
-		fmt.Println("Erreur récupération nombre de go routines", err2)
+		fmt.Println("Erreur récupération nombre de goroutines", err2)
 		return
 	}
 
+	// Récupère l'image envoyée par le client
 	img_recue := make([]byte, 0)
-	buffer := make([]byte, 1024) // Buffer size
+	buffer := make([]byte, 1024)
 	for {
 		n, err := conn.Read(buffer)
 		if err != nil {
-			fmt.Println("Error during read:", err)
+			fmt.Println("Erreur pendant lecture de la data reçue par le serveur :", err)
 			break
 		}
 		img_recue = append(img_recue, buffer[:n]...)
-		// If the received data matches the image size, stop reading
-		if int64(len(img_recue)) >= expectedImageSize { // You need to pass the expected size from the client
+		// Si la taille de ce qui est reçu correspond à la taille de l'image, on arrête de lire
+		if int64(len(img_recue)) >= expectedImageSize {
 			break
 		}
 	}
-	// Détecter le format de l'image et sauvegarder l'image dans un fichier local
+	// Détecte le format de l'image et sauvegarde l'image dans un fichier local sous le nom "received_image"
 	imgFormat := detectImageFormat(img_recue)
-	fmt.Printf("Detected image format: %s\n", imgFormat)
+	fmt.Printf("Format de l'image détecté: %s\n", imgFormat)
 
 	imgName := "received_image" + imgFormat
 
@@ -80,13 +81,13 @@ func Connection(conn net.Conn) {
 	}
 	fmt.Println("Image sauvegardée sous:", imgName)
 
-	// Appelle la fonction filtre pour traiter l'image envoyée par le client
+	// Appelle la fonction filtre pour traiter l'image envoyée par le client (création de l'image "resultat")
 	N := int(N_routines)
-	fmt.Println("nb go routines : ", N)
+	fmt.Println("Nb go routines : ", N)
 	f.Filtre(imgName, N)
 
 	imgResult := "resultat.jpeg"
-	// Lire l'image filtrée
+	// Lit l'image filtrée
 	processedImageData, err := os.ReadFile(imgResult)
 	if err != nil {
 		fmt.Println("Erreur de lecture de l'image filtrée:", err)

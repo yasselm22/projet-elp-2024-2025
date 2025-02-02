@@ -12,22 +12,22 @@ import (
 func Decoupe_image(N int, img [][]color.Color) [][][]color.Color {
 
 	/* Fonction qui découpe l'image en N bandes horizontales. N est passé en argument et pour
-	   une exécution optimale, il doit être égale au nombre de thread de notre ordi.
-	   Renvoie les coordonnées de chaque bande.
+	   une exécution optimale, il doit être égal au nombre de thread de notre ordi pour un fonctionnement optimal.
+	   Renvoie les sous-matrices qui correspondent aux bandes découpées dans l'image.
 	   Notre fonction edgeDetection utilise les coordonnées retournées par cette fonction
-	   L'image prise en argument doit être une slice de slices de color.Color et non pas de
+	   L'image prise en argument doit être une slice de color.Color et non pas de
 	   type image.Image
-	   liste_hauteurs renvoyée est de taille N+1
+
 	*/
 
 	hauteur_bande := len(img) / N
-	sousMatrices := make([][][]color.Color, N) // // Créé un tableau dynamique, qui nous permet d'utiliser N
+	sousMatrices := make([][][]color.Color, N) // Crée un tableau dynamique, qui nous permet d'utiliser N
 
 	for i := 0; i < N; i++ {
 		debut := i * hauteur_bande
 		fin := debut + hauteur_bande
 		if i == N-1 {
-			fin = len(img) // Assurer que la dernière bande inclut le reste de l'image
+			fin = len(img) // Assure que la dernière bande inclut le reste de l'image
 		}
 		sousMatrices[i] = img[debut:fin]
 	}
@@ -43,13 +43,13 @@ func EdgeDetection(pixels [][]color.Color) [][]color.Color {
 	hauteur := len(pixels)
 	largeur := len(pixels[0])
 
-	// On créé la matrice résultat
+	// On crée la matrice résultat
 	newImage := make([][]color.Color, hauteur)
 	for i := 0; i < hauteur; i++ {
 		newImage[i] = make([]color.Color, largeur)
 	}
 
-	//make image grey scale
+	// Transforme l'image en noir et blanc (gray scale)
 	for x := 0; x < hauteur; x++ { // On parcourt tous les pixels de limage
 		for y := 0; y < len(pixels[0]); y++ {
 			r, g, b, a := pixels[x][y].RGBA()                              // Pour chaque pixel, on récupère ses composantes rouge, verte, bleue et alpha
@@ -63,7 +63,7 @@ func EdgeDetection(pixels [][]color.Color) [][]color.Color {
 			}
 		}
 	}
-	// Deux matrices 3×3, kernelx et kernely, sont définies pour détecter les contours horizontaux et verticaux respectivement. Ces matrices sont utilisées pour appliquer des filtres de Sobel, un algorithme courant pour la détection de contours.
+	// Deux matrices 3×3, kernelx et kernely, sont définies pour détecter les contours horizontaux et verticaux respectivement. Ces matrices sont utilisées pour appliquer le filtre de Sobel
 	kernelx := mat.NewDense(3, 3, []float64{
 		1, 0, 1,
 		-2, 0, 2,
@@ -74,12 +74,12 @@ func EdgeDetection(pixels [][]color.Color) [][]color.Color {
 		0, 0, 0,
 		1, 2, 1,
 	})
-	//create two dimensional array to store intensities of each pixels
+	// Crée deux matrices pour stocker l'intensité de chaque pixel
 	intensity := make([][]int, len(pixels))
 	for y := 0; y < len(intensity); y++ { // On parcourt l'image pour remplir ce tableau avec les valeurs de gris calculées.
 		intensity[y] = make([]int, len(pixels[0]))
 	}
-	//calculate intensities : calcule et stocke les valeurs de gris dans un tableau séparé sans modifier l'image, en préparation pour l'application des filtres de Sobel.
+	// Calcule les intensités : calcule et stocke les valeurs de gris dans un tableau séparé sans modifier l'image, en préparation pour l'application des filtres de Sobel.
 	for i := 0; i < len(pixels); i++ {
 		for j := 0; j < len(pixels[0]); j++ {
 			if i >= 0 && i < len(pixels) && j >= 0 && j < len(pixels[0]) {
