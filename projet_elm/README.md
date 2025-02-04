@@ -27,8 +27,9 @@ elm make src/Main.elm --output=main.js
 
 ## Syntaxe TcTurtle
 L'application interprète le langage TcTurtle. Les dessins sont générés à partir de commandes comme :  
-[Forward 100, Repeat 4 [Forward 50, Left 90], Forward 100]  
-[Repeat 36 [Right 10, Repeat 8 [Forward 25, Left 45]]]  
+[Repeat 6 [Repeat 6 [Forward 100, Right 60], Repeat 12 [Forward 50, Left 150], Right 60]]
+[Repeat 36 [Repeat 12 [Forward 50, Left 150],Right 10]]
+[Repeat 180 [Forward 5, Left 10, Repeat 6 [Forward 60, Right 60]]]
 
 ## Contributions
 Les contributions sont les bienvenues !
