@@ -24,7 +24,7 @@ cd ./projet_elm/src
 
 **Pour compiler le fichier Elm en JavaScript, utilise la commande suivante :**  
 ```Bash
-elm make projet_elm/src/Main.elm --output=main.js  
+elm make Main.elm --output=main.js  
 ```
 
 **Ouvre le fichier index2.html dans ton navigateur pour voir l'application Elm en action.**
