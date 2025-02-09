@@ -35,16 +35,14 @@ turnRight angle turtle =
 renderCommands : List Command -> List (Svg msg)
 renderCommands commands =
     let
-        initialTurtle = { x = 250, y = 250, angle = 0 }  -- Position initiale au centre du SVG
+        initialTurtle = { x = 250, y = 250, angle = 0 }  -- Position initiale au centre
         (_, svgElements) =
-            List.foldl renderCommand (initialTurtle, []) commands
+            List.foldl renderCommand (initialTurtle, []) commands 
     in
     svgElements
 
 
 -- RENDER COMMANDS
--- fonction qui prend une commande (de type Command) et retourne un élément SVG (Svg msg) correspondant à cette commande
--- Elle convertie une commande TcTurtle (comme Forward, Left, Right, etc.) en un élément visuel (comme une ligne, un cercle, ou autre) qui sera affiché dans le <svg> de l'application
 renderCommand : Command -> (Turtle, List (Svg msg)) -> (Turtle, List (Svg msg))
 renderCommand command (turtle, elements) =
     case command of
@@ -71,7 +69,7 @@ renderCommand command (turtle, elements) =
 
         Repeat n subCommands ->
             let
-                -- Répète les sous-commandes `n` fois
+                -- Répète les sous-commandes n fois
                 repeatedCommands = List.repeat n subCommands |> List.concat
             in
             -- Applique les commandes répétées

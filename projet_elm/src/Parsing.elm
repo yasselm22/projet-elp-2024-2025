@@ -2,12 +2,14 @@ module Parsing exposing (Command(..), programParser)
 
 import Parser exposing (Parser, (|.), (|=), succeed, symbol, int, float, spaces, lazy, sequence)
 
+-- Définition des types de commandes possibles
 type Command
     = Forward Float
     | Left Float
     | Right Float
     | Repeat Int (List Command)
 
+-- Parser principal pour une commande
 commandParser : Parser Command
 commandParser =
     Parser.oneOf
@@ -17,6 +19,7 @@ commandParser =
         , rightParser   
         ]
 
+-- Parser pour la commande "Forward"
 forwardParser : Parser Command
 forwardParser =
     succeed Forward
@@ -24,6 +27,7 @@ forwardParser =
         |. spaces
         |= float
 
+-- Parser pour la commande "Left"
 leftParser : Parser Command
 leftParser =
     succeed Left
@@ -31,6 +35,7 @@ leftParser =
         |. spaces
         |= float
 
+-- Parser pour la commande "Right"
 rightParser : Parser Command
 rightParser =
     succeed Right
@@ -38,6 +43,7 @@ rightParser =
         |. spaces
         |= float
 
+-- Parser pour la commande "Repeat"
 repeatParser : Parser Command
 repeatParser =
     succeed Repeat
